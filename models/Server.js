@@ -7,6 +7,7 @@ class Server {
         //Middleware
         this.middleware();
         this.port = process.env.PORT
+        this.usuarioPath = "/api/users"
          //Routes
         this.routes();
     }
@@ -17,31 +18,7 @@ class Server {
         this.app.use(express.static('public'));
     }
     routes() {
-            this.app.get("/home", (req,res)=>{
-                res.json({
-                    "message": "landingpage"
-                })
-            });
-            this.app.post("/", (req,res)=>{
-                res.json({
-                    "message": "post api"
-                })
-            });
-            this.app.delete("/", (req,res)=>{
-                res.json({
-                    "message": "delete api"
-                })
-            });
-            this.app.put("/", (req,res)=>{
-                res.json({
-                    "message": "put api"
-                })
-            })
-            this.app.patch("/", (req,res)=>{
-                res.json({
-                    "message": "patch api"
-                })
-            })
+            this.app.use(this.usuarioPath, require('../routes/usuario.routes.js'));
         }
         listen(){
             this.app.listen(this.port, ()=>{
